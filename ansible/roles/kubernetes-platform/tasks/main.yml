@@ -43,6 +43,44 @@
     - platform
     - gateway-api
 
+- name: Install local-path-provisioner
+  ansible.builtin.command: >-
+    kubectl apply -f
+    https://raw.githubusercontent.com/rancher/local-path-provisioner/{{ local_path_provisioner_version }}/deploy/local-path-storage.yaml
+  register: local_path_apply
+  changed_when: "'unchanged' not in local_path_apply.stdout"
+  run_once: true
+  tags:
+    - kubernetes-platform
+    - platform
+    - storage
+    - local-path
+
+- name: Wait for local-path-provisioner
+  ansible.builtin.command: >-
+    kubectl -n {{ local_path_provisioner_namespace }}
+    rollout status deployment/local-path-provisioner --timeout=180s
+  changed_when: false
+  run_once: true
+  tags:
+    - kubernetes-platform
+    - platform
+    - storage
+    - local-path
+
+- name: Set local-path as default StorageClass
+  ansible.builtin.command: >-
+    kubectl annotate storageclass {{ local_path_storage_class_name }}
+    storageclass.kubernetes.io/is-default-class=true --overwrite
+  register: local_path_default
+  changed_when: "'not annotated' not in local_path_default.stderr"
+  run_once: true
+  tags:
+    - kubernetes-platform
+    - platform
+    - storage
+    - local-path
+
 - name: Add MetalLB Helm repository
   ansible.builtin.command: "{{ helm_binary_path }} repo add metallb https://metallb.github.io/metallb --force-update"
   changed_when: false

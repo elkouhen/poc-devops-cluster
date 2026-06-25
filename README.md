@@ -10,4 +10,6 @@ make up
 
 Le cluster expose Traefik via MetalLB. Par defaut, le pool est configure dans `ansible/group_vars/all.yml` avec `192.168.33.100-192.168.33.120`.
 
+Le role Ansible installe aussi `local-path-provisioner` et definit la StorageClass `local-path` comme classe par defaut pour les PVC locaux du POC.
+
 Ce repo ne deploie pas GitLab, ArgoCD, le registry ni les applications. Ces composants vivent dans `poc-devops-platform`.
