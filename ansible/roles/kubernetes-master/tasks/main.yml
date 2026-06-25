@@ -55,6 +55,44 @@
     - control-plane
     - kubeconfig
 
+- name: Read admin kubeconfig
+  ansible.builtin.slurp:
+    src: /etc/kubernetes/admin.conf
+  register: kubeconfig_admin_conf
+  no_log: true
+  when: kubeconfig_local_update | bool
+  tags:
+    - kubernetes-master
+    - control-plane
+    - kubeconfig
+
+- name: Create local kubeconfig directory
+  ansible.builtin.file:
+    path: "{{ kubeconfig_local_path | dirname }}"
+    state: directory
+    mode: '0700'
+  delegate_to: localhost
+  become: false
+  when: kubeconfig_local_update | bool
+  tags:
+    - kubernetes-master
+    - control-plane
+    - kubeconfig
+
+- name: Replace local kubeconfig
+  ansible.builtin.copy:
+    content: "{{ kubeconfig_admin_conf.content | b64decode }}"
+    dest: "{{ kubeconfig_local_path }}"
+    mode: '0600'
+  delegate_to: localhost
+  become: false
+  no_log: true
+  when: kubeconfig_local_update | bool
+  tags:
+    - kubernetes-master
+    - control-plane
+    - kubeconfig
+
 - name: Install CNI plugin
   command: "kubectl apply -f https://github.com/flannel-io/flannel/releases/download/{{ flannel_version }}/kube-flannel.yml"
   tags:

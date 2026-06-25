@@ -1,2 +1,4 @@
 ---
 force_cluster_reset: false
+kubeconfig_local_update: true
+kubeconfig_local_path: "{{ lookup('env', 'HOME') }}/.kube/config"
