@@ -6,6 +6,16 @@
     - kube-prereqs
     - swap
 
+- name: Désactiver le swap de manière permanente (fstab)
+  ansible.builtin.replace:
+    path: /etc/fstab
+    regexp: '^([^#].*\sswap\s+.*)$'
+    replace: '# \1'
+  tags:
+    - kubernetes
+    - kube-prereqs
+    - swap
+
 - name: Enable SELinux in enforcing mode
   ansible.posix.selinux:
     policy: targeted
