@@ -32,5 +32,5 @@ Le cluster fournit :
 
 ## Relation avec les autres projets
 
-`poc-devops-platform` dépend de ce socle. Les applications et leurs manifests
+`platform-cicd` dépend de ce socle. Les applications et leurs manifests
 ne sont pas installés ici.

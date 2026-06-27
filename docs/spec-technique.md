@@ -34,4 +34,4 @@ pour le chemin basé sur les images Packer.
 ## Frontière de responsabilité
 
 Ce dépôt prépare le cluster et les add-ons réseau bas niveau. Les composants
-applicatifs et GitOps sont déclarés dans `poc-devops-platform`.
+applicatifs et GitOps sont déclarés dans `platform-cicd`.

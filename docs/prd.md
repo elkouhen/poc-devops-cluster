@@ -2,12 +2,12 @@
 
 ## Intention du projet
 
-`poc-devops-cluster` fournit le socle Kubernetes local du POC. Il prépare un
-cluster capable d'héberger `poc-devops-platform`, mais ne déploie pas GitLab,
+`cluster` fournit le socle Kubernetes local du POC. Il prépare un
+cluster capable d'héberger `platform-cicd`, mais ne déploie pas GitLab,
 ArgoCD, le registry ni les applications.
 
 La vision globale de la chaîne CI/CD est dans
-`../../poc-devops-platform/docs/prd.md`.
+`../../platform-cicd/docs/prd.md`.
 
 ## Produit attendu
 
