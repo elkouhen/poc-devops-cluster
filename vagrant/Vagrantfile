@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+  packer_output_dir = File.expand_path("../packer/output", __dir__)
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_guest = true
@@ -17,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "master-01" do |node|
     #node.vm.box = "bento/rockylinux-10"
     node.vm.box = "k8s-master"
-    node.vm.box_url = "file://Users/m.el-kouhen/poc-devops/cluster/packer/output/k8s-master/package.box"
+    node.vm.box_url = "file://#{File.join(packer_output_dir, "k8s-master", "package.box")}"
     #node.vm.box_version = "202512.01.0"
     node.vm.hostname = "master-01"
     node.vm.network "private_network", ip: "192.168.33.10"
@@ -32,7 +33,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "worker-01" do |node|
     #node.vm.box = "bento/rockylinux-10"
     node.vm.box = "k8s-worker"
-    node.vm.box_url = "file:/Users/m.el-kouhen/poc-devops/cluster/packer/output/k8s-worker/package.box"
+    node.vm.box_url = "file://#{File.join(packer_output_dir, "k8s-worker", "package.box")}"
     #node.vm.box_version = "202512.01.0"
     node.vm.hostname = "worker-01"
     node.vm.network "private_network", ip: "192.168.33.11"

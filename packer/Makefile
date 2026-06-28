@@ -17,10 +17,10 @@ build: build-master build-worker
 
 # Ajoute les boxes construites dans le registre Vagrant local
 add-master:
-	vagrant box add k8s-master $(OUTPUT_DIR)/k8s-master/virtualbox.box --force
+	vagrant box add k8s-master $(OUTPUT_DIR)/k8s-master/package.box --force
 
 add-worker:
-	vagrant box add k8s-worker $(OUTPUT_DIR)/k8s-worker/virtualbox.box --force
+	vagrant box add k8s-worker $(OUTPUT_DIR)/k8s-worker/package.box --force
 
 add: add-master add-worker
 
