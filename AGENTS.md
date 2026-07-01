@@ -38,6 +38,16 @@ make destroy             # Détruire les VMs
 cd packer && make build  # Construire les images VM Packer
 ```
 
+## Provisioning des images Packer
+
+Les images Packer (`packer/master.pkr.hcl`, `packer/worker.pkr.hcl`) doivent
+être provisionnées via le `provisioner "ansible"` (réutilisant
+`ansible/playbook.yml` avec `--skip-tags` pour exclure les étapes
+cluster-dépendantes), pas via un `provisioner "shell"` ad hoc. C'est déjà le
+cas aujourd'hui — ne pas régresser vers du shell inline en cas de nouvelle
+étape de provisioning : ajouter un rôle/tag Ansible et l'inclure dans le
+playbook existant.
+
 ## Contraintes Vagrant / QEMU
 
 - Ne pas proposer de workflow nécessitant Vagrant ou QEMU en root.
